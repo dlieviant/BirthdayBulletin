@@ -2,7 +2,7 @@
 /**
  * Stores the month and date information for members' Birthday and Anniversary
  * @author dlieviant
- *
+ * TODO replace this in favor of composition instead.
  */
 public abstract class BirthdayAnniversary {
 	protected String month;
