@@ -5,11 +5,12 @@
  * @author dlieviant
  *
  */
-public class Anniversary extends BirthdayAnniversary{
+public class Anniversary {
 	private String husbandName;
 	private String wifeName;
 	private String lastName;
-	
+	private String month;
+	private String day;
 	
 	public Anniversary(String hn, String wn, String ln, String bd) {
 		husbandName = hn;
@@ -32,10 +33,26 @@ public class Anniversary extends BirthdayAnniversary{
 		return lastName;
 	}
 	
+	public String getMonth() {
+		return month;
+	}
+	
+	public String getDay() {
+		return day;
+	}
+	
+	public void setMonth(String m) {
+		month = m;
+	}
+	
+	public void setDay(String d) {
+		day = d;
+	}
+	
 	/**
 	 * Returns the String representative of the Anniversary object
 	 */
 	public String toString() {
-		return wifeName + " and " + husbandName + " " + lastName + " " + super.toString();
+		return wifeName + " and " + husbandName + " " + lastName + " " + "(" + BulletinBirthdayList.monthName(month, false) + " " + day + ")";
 	}
 }

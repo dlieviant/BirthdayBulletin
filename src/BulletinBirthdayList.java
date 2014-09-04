@@ -1,11 +1,11 @@
 import java.util.*;
 import java.io.*;
 
-public class BulletinBirthdayList extends BirthdayAnniversary{
+public class BulletinBirthdayList {
 	
 	private static String month; //the month the lists are generated for
-	private static ArrayList<BirthdayAnniversary> birthdayList; //list of members' birthday
-	private static ArrayList<BirthdayAnniversary> anniversaryList; //list of members' anniversary
+	private static ArrayList<Birthday> birthdayList; //list of members' birthday
+	private static ArrayList<Anniversary> anniversaryList; //list of members' anniversary
 	private static ArrayList<Birthday> tempList; //temporary list for members' anniversary
 	
 	/**
@@ -17,13 +17,13 @@ public class BulletinBirthdayList extends BirthdayAnniversary{
 		calendar.setTime(date);
 		month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
 		
-		birthdayList = new ArrayList<BirthdayAnniversary>();
-		anniversaryList = new ArrayList<BirthdayAnniversary>();
+		birthdayList = new ArrayList<Birthday>();
+		anniversaryList = new ArrayList<Anniversary>();
 		tempList = new ArrayList<Birthday>();
 		
 		readFile();
-		sortList(birthdayList);
-		sortList(anniversaryList);
+		sortBirthdayList();
+		sortAnniversaryList();
 		
 		printHTML();
 	}
@@ -101,17 +101,32 @@ public class BulletinBirthdayList extends BirthdayAnniversary{
 	}
 	
 	/**
-	 * Sorts the list in ascending order based on the date
+	 * Sorts the birthday list in ascending order based on the date
 	 */
-	private static void sortList(ArrayList<BirthdayAnniversary> l) {
-		for(int i = 0; i < l.size(); i++) {
+	private static void sortBirthdayList() {
+		for(int i = 0; i < birthdayList.size(); i++) {
 			int min = i;
-			for(int j = i+1; j < l.size(); j++) {
-				if(l.get(j).getDay().compareTo(l.get(min).getDay()) < 0) min = j;
+			for(int j = i+1; j < birthdayList.size(); j++) {
+				if(birthdayList.get(j).getDay().compareTo(birthdayList.get(min).getDay()) < 0) min = j;
 			}
-			BirthdayAnniversary temp = l.get(i);
-			l.set(i, l.get(min));
-			l.set(min, temp);
+			Birthday temp = birthdayList.get(i);
+			birthdayList.set(i, birthdayList.get(min));
+			birthdayList.set(min, temp);
+		}
+	}	
+	
+	/**
+	 * Sorts the anniversary list in ascending order based on the date
+	 */
+	private static void sortAnniversaryList() {
+		for(int i = 0; i < anniversaryList.size(); i++) {
+			int min = i;
+			for(int j = i+1; j < anniversaryList.size(); j++) {
+				if(anniversaryList.get(j).getDay().compareTo(anniversaryList.get(min).getDay()) < 0) min = j;
+			}
+			Anniversary temp = anniversaryList.get(i);
+			anniversaryList.set(i, anniversaryList.get(min));
+			anniversaryList.set(min, temp);
 		}
 	}	
 
@@ -131,5 +146,101 @@ public class BulletinBirthdayList extends BirthdayAnniversary{
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Gives an English name of the month based on its numerical representation
+	 * @param month the numerical representation of the month as a String
+	 * @param full whether to give the full name of the month (e.g. January) or its acronym (e.g. Jan)
+	 * @return the English name of the month
+	 */
+	public static String monthName(String month, boolean full) {
+		String ans = "";
+		switch(month) {
+			case "1": 
+				if(full) {
+					ans = "January";
+				} else {
+					ans = "Jan";
+				}
+				break;
+			case "2":
+				if(full) {
+					ans = "February";
+				} else {
+					ans = "Feb";
+				}
+				break;
+			case "3":
+				if(full) {
+					ans = "March";
+				} else {
+					ans = "Mar";
+				}
+				break;
+			case "4":
+				if(full) {
+					ans = "April";
+				} else {
+					ans = "Apr";
+				}
+				break;
+			case "5":
+				ans = "May";
+				break;
+			case "6":
+				if(full) {
+					ans = "June";
+				} else {
+					ans = "Jun";
+				}
+				break;
+			case "7":
+				if(full) {
+					ans = "July";
+				} else {
+					ans = "Jul";
+				}
+				break;
+			case "8":
+				if(full) {
+					ans = "August";
+				} else {
+					ans = "Aug";
+				}
+				break;
+			case "9":
+				if(full) {
+					ans = "September";
+				} else {
+					ans = "Sep";
+				}
+				break;
+			case "10":
+				if(full) {
+					ans = "October";
+				} else {
+					ans = "Oct";
+				}
+				break;
+			case "11":
+				if(full) {
+					ans = "November";
+				} else {
+					ans = "Nov";
+				}
+				break;
+			case "12":
+				if(full) {
+					ans = "December";
+				} else {
+					ans = "Dec";
+				}
+				break;
+			default:
+				ans = "N/A";
+				break;
+		}
+		return ans;
 	}
 }
