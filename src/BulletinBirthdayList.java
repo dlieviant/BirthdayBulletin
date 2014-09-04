@@ -3,6 +3,7 @@ import java.io.*;
 
 public class BulletinBirthdayList extends BirthdayAnniversary{
 	
+	//test
 	private static String month; //the month the lists are generated for
 	private static ArrayList<BirthdayAnniversary> birthdayList; //list of members' birthday
 	private static ArrayList<BirthdayAnniversary> anniversaryList; //list of members' anniversary
