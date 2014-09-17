@@ -34,3 +34,8 @@ Icon
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+
+BirthdayList.txt
+GKIBirthday.html
+javax.mail.jar
+smtp-1.4.5.jar
