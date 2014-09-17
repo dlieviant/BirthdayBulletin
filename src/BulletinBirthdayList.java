@@ -1,5 +1,8 @@
 import java.util.*;
 import java.io.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.activation.*;
 
 public class BulletinBirthdayList {
 	
@@ -15,7 +18,7 @@ public class BulletinBirthdayList {
 		Calendar calendar = new GregorianCalendar();
 		Date date = new Date();
 		calendar.setTime(date);
-		month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+		month = String.valueOf(calendar.get(Calendar.MONTH));
 		
 		birthdayList = new ArrayList<Birthday>();
 		anniversaryList = new ArrayList<Anniversary>();
@@ -26,6 +29,8 @@ public class BulletinBirthdayList {
 		sortAnniversaryList();
 		
 		printHTML();
+		
+		sendEmail();
 	}
 	
 	/**
@@ -243,4 +248,56 @@ public class BulletinBirthdayList {
 		}
 		return ans;
 	}
+	
+	private static void sendEmail() {
+		
+		System.setProperty("java.net.preferIPv4Stack" , "true");
+		final String username = "d.lieviant@gmail.com";
+		final String password = "6.02x10^23";
+		String from = "d.lieviant@gmail.com";
+		String to = "kirisu@gmail.com";
+		String attach = "GKIBirthday.html";
+ 
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+ 
+		Session session = Session.getInstance(props,
+		  new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		  });
+ 
+		try {
+ 
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(from));
+			message.setRecipients(Message.RecipientType.TO,
+				InternetAddress.parse(to));
+			message.setSubject("It Works!");
+			
+			BodyPart messageBodyPart = new MimeBodyPart();
+			messageBodyPart.setText("Got the email part working. Also managed to send the attachment.");
+
+	        Multipart multipart = new MimeMultipart();
+	        multipart.addBodyPart(messageBodyPart);
+	        
+	        messageBodyPart = new MimeBodyPart();
+	        DataSource source = new FileDataSource(attach);
+	        messageBodyPart.setDataHandler(new DataHandler(source));
+	        messageBodyPart.setFileName(attach);
+	        multipart.addBodyPart(messageBodyPart);
+	        message.setContent(multipart);
+ 
+			Transport.send(message);
+ 
+			System.out.println("email successfully sent");
+ 
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+	}	
 }
